@@ -1,6 +1,4 @@
-gem 'minitest'
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/ideabox/idea'
 
 class IdeaTest < Minitest::Test
@@ -31,6 +29,20 @@ class IdeaTest < Minitest::Test
 
     ideas = [diet, exercise, drink]
     assert_equal [diet, drink, exercise], ideas.sort
+  end
+
+  def test_ideas_can_be_changed
+    idea = Idea.new("money", "in the bank")
+    idea.id = 5
+    assert_equal 5, idea.id
+    assert_equal "money", idea.title
+    assert_equal "in the bank", idea.description
+    idea.id = 7
+    idea.title = "hello"
+    idea.description = "world!"
+    assert_equal 7, idea.id
+    assert_equal "hello", idea.title
+    assert_equal "world!", idea.description
   end
 
 end
