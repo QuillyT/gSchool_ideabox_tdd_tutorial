@@ -29,7 +29,6 @@ class IdeaManagementTest < Minitest::Test
   # end
 
   def test_manage_ideas
-    skip
     # Create a couple of decoys
     # This is so we know we're editing the right thing later
     IdeaStore.save Idea.new("laundry", "buy more socks")
