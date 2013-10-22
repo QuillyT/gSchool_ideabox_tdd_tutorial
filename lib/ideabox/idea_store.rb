@@ -29,5 +29,11 @@ class IdeaStore
     def delete_all
       @all = []
     end
+
+    def find_by_title(text)
+      all.find do |idea|
+        idea.title == text
+      end
+    end
   end
 end

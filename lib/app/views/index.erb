@@ -1,8 +1,11 @@
 <html>
+
   <head>
     <title>IdeaBox</title>
   </head>
+
   <body>
+
     <h1>Add a new idea</h1>
 
     <form action='/' method='POST'>
@@ -15,7 +18,18 @@
 
     <ul>
       <% ideas.each do |idea| %>
-        <li><%= idea.title %> - <%= idea.description %></li>
+
+        <li id="idea_<%= idea.id %>">
+
+          <%= idea.title %> - <%= idea.description %>
+          <a href="/<%= idea.id %>">Edit</a>
+
+          <form action'<%= idea.id %>' value="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type='submit' value="Delete"/>
+          </form>
+
+        </li>
       <% end %>
     </ul>
   </body>
