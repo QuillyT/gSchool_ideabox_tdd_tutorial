@@ -26,6 +26,5 @@ class IdeaManagementTest < Minitest::Test
     fill_in 'description', :with => 'chocolate chip cookies'
     click_button 'Save'
     assert page.has_content?("chocolate chip cookies"), "Idea is not on page"
-
   end
 end
