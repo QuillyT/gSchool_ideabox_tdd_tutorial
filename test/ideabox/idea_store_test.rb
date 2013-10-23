@@ -112,4 +112,22 @@ class IdeaStoreTest < Minitest::Test
     assert_equal 1, IdeaStore.get_index_of(idea)
   end
 
+  def test_it_can_store_ideas_with_tags
+    idea = Idea.new("sleep", "like a baby")
+    idea.add_tag Tag.new "awesome"
+    IdeaStore.save idea
+
+    idea1 = IdeaStore.all[0]
+
+    assert_equal 1, idea1.tags.count
+    assert_equal "awesome", idea1.tags[0].line
+
+    idea.add_tag Tag.new "sweet"
+    IdeaStore.save idea
+    idea1 = IdeaStore.all[0]
+
+    assert_equal 2, idea1.tags.count
+    assert_equal "sweet", idea1.tags[1].line
+  end
+
 end
