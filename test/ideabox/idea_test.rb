@@ -45,4 +45,14 @@ class IdeaTest < Minitest::Test
     assert_equal "world!", idea.description
   end
 
+  def test_ideas_can_have_tags
+    #create a tag
+    #add tag to idea
+    #assert idea has tag
+    #create another tag
+    #add tag to idea
+    #assert idea has first tag
+    #assert idea has second tag
+  end
+
 end
