@@ -16,11 +16,6 @@ class IdeaboxAppHelper < Minitest::Test
     IdeaStore.delete_all
   end
 
-  #def test_hello
-  #  get '/'
-  #  assert_equal "Hello, World!", last_response.body
-  #end
-
   def test_idea_list
     IdeaStore.save Idea.new("dinner", "spaghetti and meatballs")
     IdeaStore.save Idea.new("drinks", "imported beers")
@@ -50,7 +45,7 @@ class IdeaboxAppHelper < Minitest::Test
   def test_edit_idea
     id = IdeaStore.save Idea.new('sing', 'happy songs')
 
-    put "/#{id}", {title: 'yodle', description: 'joyful songs'}
+    put "/ideas/#{id}", {title: 'yodle', description: 'joyful songs'}
 
     assert_equal 302, last_response.status
 
@@ -64,7 +59,7 @@ class IdeaboxAppHelper < Minitest::Test
 
     assert_equal 1, IdeaStore.count
 
-    delete "/#{id}"
+    delete "/ideas/#{id}"
 
     assert_equal 302, last_response.status
     assert_equal 0, IdeaStore.count
@@ -73,7 +68,7 @@ class IdeaboxAppHelper < Minitest::Test
   def test_like_idea
     id = IdeaStore.save Idea.new('happy', 'tree friends')
 
-    post "/#{id}/like"
+    post "/ideas/#{id}/like"
 
     idea = IdeaStore.find(id)
     assert_equal 1, idea.rank

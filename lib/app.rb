@@ -10,18 +10,13 @@ class IdeaboxApp < Sinatra::Base
     erb :index, locals: {ideas: IdeaStore.all.sort.reverse}
   end
 
-  get '/:id' do |id|
-    idea = IdeaStore.find(id.to_i)
-    erb :edit, locals: {idea: idea}
-  end
-
   post '/' do
     idea = Idea.new(params[:title], params[:description])
     IdeaStore.save(idea)
     redirect '/'
   end
 
-  put '/:id' do |id|
+  put '/ideas/:id' do |id|
     idea = IdeaStore.find(id.to_i)
     idea.title = params[:title]
     idea.description = params[:description]
@@ -29,15 +24,21 @@ class IdeaboxApp < Sinatra::Base
     redirect '/'
   end
 
-  delete '/:id' do |id|
+  delete '/ideas/:id' do |id|
     IdeaStore.delete(id.to_i)
     redirect '/'
   end
 
-  post '/:id/like' do |id|
+  post '/ideas/:id/like' do |id|
     idea = IdeaStore.find(id.to_i)
     idea.like!
     IdeaStore.save(idea)
     redirect '/'
   end
+
+  get '/ideas/:id' do |id|
+    idea = IdeaStore.find(id.to_i)
+    erb :edit, locals: {idea: idea}
+  end
+
 end
