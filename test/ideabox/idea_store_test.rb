@@ -53,6 +53,8 @@ class IdeaStoreTest < Minitest::Test
     idea = IdeaStore.find(id)
     assert_equal "cocktails", idea.title
     assert_equal "spicy tomato juice with vodka", idea.description
+
+    assert_equal 1, IdeaStore.count
   end
 
   def test_delete_an_idea
@@ -99,6 +101,15 @@ class IdeaStoreTest < Minitest::Test
     assert_equal 4, IdeaStore.count
     assert_equal "dream", IdeaStore.find(id).title
     assert_equal "like anything is possible", IdeaStore.find(id).description
+  end
+
+  def test_it_finds_yaml_index_of_existing_idea
+    idea = Idea.new("sleep", "like a baby")
+    IdeaStore.save Idea.new("dance", "like it's the 80s")
+    IdeaStore.save idea
+    IdeaStore.save Idea.new("dream", "like anything is possible")
+
+    assert_equal 1, IdeaStore.get_index_of(idea)
   end
 
 end

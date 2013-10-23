@@ -14,11 +14,18 @@ class IdeaStore
       idea.id
     end
 
-    def update(idea)
+    def update(data)
+      index = get_index_of(data)
       database.transaction do
-        database['ideas'][idea.id] = idea
+        database['ideas'][index] = data
       end
-      idea.id
+      data.id
+    end
+
+    def get_index_of(data)
+      database.transaction do
+        database['ideas'].index{ |idea| idea.id == data.id }
+      end
     end
 
     def all
