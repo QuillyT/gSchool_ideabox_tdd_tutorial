@@ -124,10 +124,10 @@ class IdeaStoreTest < Minitest::Test
 
     idea.add_tag Tag.new "sweet"
     IdeaStore.save idea
-    idea1 = IdeaStore.all[0]
+    idea2 = IdeaStore.all[0]
 
-    assert_equal 2, idea1.tags.count
-    assert_equal "sweet", idea1.tags[1].line
+    assert_equal 2, idea2.tags.count
+    assert_equal "sweet", idea2.tags[1].line
   end
 
 end
