@@ -69,4 +69,13 @@ class IdeaboxAppHelper < Minitest::Test
     assert_equal 302, last_response.status
     assert_equal 0, IdeaStore.count
   end
+
+  def test_like_idea
+    id = IdeaStore.save Idea.new('happy', 'tree friends')
+
+    post "/#{id}/like"
+
+    idea = IdeaStore.find(id)
+    assert_equal 1, idea.rank
+  end
 end

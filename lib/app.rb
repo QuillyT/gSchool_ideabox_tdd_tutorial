@@ -7,7 +7,7 @@ class IdeaboxApp < Sinatra::Base
   set :root, "./lib/app"
 
   get '/' do
-    erb :index, locals: {ideas: IdeaStore.all}
+    erb :index, locals: {ideas: IdeaStore.all.sort.reverse}
   end
 
   get '/:id' do |id|
@@ -31,6 +31,13 @@ class IdeaboxApp < Sinatra::Base
 
   delete '/:id' do |id|
     IdeaStore.delete(id.to_i)
+    redirect '/'
+  end
+
+  post '/:id/like' do |id|
+    idea = IdeaStore.find(id.to_i)
+    idea.like!
+    IdeaStore.save(idea)
     redirect '/'
   end
 end

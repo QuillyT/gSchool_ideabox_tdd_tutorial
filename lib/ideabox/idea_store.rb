@@ -19,7 +19,9 @@ class IdeaStore
     end
 
     def next_id
-      all.size
+      #all.size
+      @counter ||= -1
+      @counter += 1
     end
 
     def delete(id)
@@ -28,6 +30,7 @@ class IdeaStore
 
     def delete_all
       @all = []
+      @counter = -1
     end
 
     def find_by_title(text)
