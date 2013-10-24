@@ -12,6 +12,12 @@ class IdeaboxApp < Sinatra::Base
 
   post '/' do
     idea = Idea.new(params[:title], params[:description])
+    params[:tags].to_s.split(',').each do |line|
+      line.strip!
+      unless line.length == 0
+        idea.add_tag(Tag.new(line))
+      end
+    end
     IdeaStore.save(idea)
     redirect '/'
   end

@@ -19,7 +19,12 @@
     <ul>
       <% ideas.each do |idea| %>
         <li id="idea_<%= idea.id %>">
-          <%= idea.rank %>: <%= idea.title %> - <%= idea.description %>
+
+          <%= idea.rank %>: <%= idea.title %> - <%= idea.description %> :::
+
+          <% idea.tags.each do |tag| %>
+            <a href=#><%= tag.line %></a>
+          <% end %>
 
           <br/>
 
