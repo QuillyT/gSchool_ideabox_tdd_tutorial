@@ -138,5 +138,12 @@ class IdeaManagementTest < Minitest::Test
     assert page.has_content?("hot"), "Tag 'hot' is not showing."
     assert page.has_content?("music"), "Tag 'music' is not showing."
 
+    # Edit the idea
+    within("#idea_#{idea.id}") do
+      click_link 'Edit'
+    end
+
+    assert_equal 'cool, hot, music', find_field('tags').value
+
   end
 end
