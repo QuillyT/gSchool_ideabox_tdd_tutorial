@@ -121,16 +121,22 @@ class IdeaManagementTest < Minitest::Test
   end
 
   def test_tags_show
-    IdeaStore.save Idea.new("fun", "ride horses")
     tag1 = Tag.new("cool")
     tag2 = Tag.new("hot")
     tag3 = Tag.new("music")
+    idea = Idea.new("fun", "ride horses")
+
+    idea.add_tag(tag1)
+    idea.add_tag(tag2)
+    idea.add_tag(tag3)
+
+    IdeaStore.save idea
 
     visit '/'
 
     assert page.has_content?("cool"), "Tag 'cool' is not showing."
     assert page.has_content?("hot"), "Tag 'hot' is not showing."
-    assert page.has_content?("stuff"), "Tag 'music' is not showing."
+    assert page.has_content?("music"), "Tag 'music' is not showing."
 
   end
 end
