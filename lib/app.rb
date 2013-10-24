@@ -7,7 +7,7 @@ class IdeaboxApp < Sinatra::Base
   set :root, "./lib/app"
 
   get '/' do
-    erb :index, locals: {ideas: IdeaStore.all.sort.reverse}
+    erb :index, locals: {ideas: IdeaStore.all.sort.reverse, idea: Idea.new("","")}
   end
 
   post '/' do
@@ -26,6 +26,12 @@ class IdeaboxApp < Sinatra::Base
     idea = IdeaStore.find(id.to_i)
     idea.title = params[:title]
     idea.description = params[:description]
+    params[:tags].to_s.split(',').each do |line|
+      line.strip!
+      unless line.length == 0
+        idea.add_tag(Tag.new(line))
+      end
+    end
     IdeaStore.save(idea)
     redirect '/'
   end
@@ -45,6 +51,10 @@ class IdeaboxApp < Sinatra::Base
   get '/ideas/:id' do |id|
     idea = IdeaStore.find(id.to_i)
     erb :edit, locals: {idea: idea}
+  end
+
+  def show_tags(idea)
+    idea.tags.map(&:line).join(", ")
   end
 
 end
