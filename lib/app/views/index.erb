@@ -9,8 +9,9 @@
     <h1>Add a new idea</h1>
 
     <form action='/' method='POST'>
-      <input type='text' name='title'/><br/>
-      <textarea name='description'></textarea><br/>
+      Title: <input type='text' name='title'/><br/>
+      Description: <textarea name='description'></textarea><br/>
+      Tags: <input type='text' name='tags'/><br/>
       <input type='submit' value="Save"/>
     </form>
 
@@ -18,15 +19,26 @@
     <ul>
       <% ideas.each do |idea| %>
         <li id="idea_<%= idea.id %>">
-          <%= idea.rank %>: <%= idea.title %> - <%= idea.description %>
+
+          <%= idea.rank %>: <%= idea.title %> - <%= idea.description %> :::
+
+          <% idea.tags.each do |tag| %>
+            <a href=#><%= tag.line %></a>
+          <% end %>
+
+          <br/>
+
           <a href="/ideas/<%= idea.id %>">Edit</a>
+
           <form action='/ideas/<%= idea.id %>' method='POST'>
             <input type="hidden" name="_method" value="DELETE">
             <input type='submit' value="Delete"/>
           </form>
+
           <form action='/ideas/<%= idea.id %>/like' method='POST' style="display: inline">
             <input type='submit' value="+"/>
           </form>
+
         </li>
       <% end %>
     </ul>

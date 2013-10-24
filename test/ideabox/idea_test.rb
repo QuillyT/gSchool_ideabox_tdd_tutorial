@@ -45,4 +45,18 @@ class IdeaTest < Minitest::Test
     assert_equal "world!", idea.description
   end
 
+  def test_ideas_can_have_tags
+    tag1 = Tag.new("CoOl")
+    idea = Idea.new("holy", "cow that is fun!")
+    idea.add_tag(tag1)
+    assert "cool", idea.tags[0]
+
+    tag2 = Tag.new("HoT")
+    idea.add_tag(tag2)
+
+    assert idea.tags.include?(tag1)
+    assert idea.tags.include?(tag2)
+    assert_equal 2, idea.tags.count
+  end
+
 end

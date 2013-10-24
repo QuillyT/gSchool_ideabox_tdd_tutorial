@@ -1,4 +1,7 @@
+ENV['RACK_ENV'] = 'test'
+
 require './test/test_helper'
+
 require 'bundler'
 Bundler.require
 require 'rack/test'
@@ -115,5 +118,19 @@ class IdeaManagementTest < Minitest::Test
     assert_match /camping in the mountains/, ideas[0].text
     assert_match /a book about being brave/, ideas[1].text
     assert_match /ride horses/, ideas[2].text
+  end
+
+  def test_tags_show
+    IdeaStore.save Idea.new("fun", "ride horses")
+    tag1 = Tag.new("cool")
+    tag2 = Tag.new("hot")
+    tag3 = Tag.new("music")
+
+    visit '/'
+
+    assert page.has_content?("cool"), "Tag 'cool' is not showing."
+    assert page.has_content?("hot"), "Tag 'hot' is not showing."
+    assert page.has_content?("stuff"), "Tag 'music' is not showing."
+
   end
 end
